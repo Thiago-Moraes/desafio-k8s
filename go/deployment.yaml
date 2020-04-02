@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: web-server-go
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: web-server-go
+    template:
+        metadata:
+            labels:
+                app: web-server-go
+        spec:
+            containers:
+            -   name: web-server
+                image: thiagomoraes/desafio_go
+                ports:
+                -   containerPort: 8000

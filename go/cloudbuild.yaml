@@ -1,0 +1,15 @@
+steps:
+- id: "Build  soma.go"
+  name: mirror.gcr.io/library/golang
+  env: ['GO111MODULE=on']
+  args: ['go', 'build', 'app.go']
+
+- id: "Executanto o test"
+  name: mirror.gcr.io/library/golang
+  args: ['go', 'test', '-v']
+
+- id: "Build image"
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/desafio_go', '.']
+
+images: ['gcr.io/$PROJECT_ID/desafio_go']
