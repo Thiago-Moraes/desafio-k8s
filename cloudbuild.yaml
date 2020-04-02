@@ -1,5 +1,5 @@
 steps:
-- id: "Build  soma.go"
+- id: "Build desafio golang"
   name: mirror.gcr.io/library/golang
   env: ['GO111MODULE=on']
   args: ['go', 'build', 'main.go']
@@ -12,4 +12,4 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/desafio_go', '.']
 
-# images: ['gcr.io/$PROJECT_ID/desafio_go']
+images: ['gcr.io/$PROJECT_ID/desafio_go']
