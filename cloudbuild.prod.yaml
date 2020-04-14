@@ -1,0 +1,35 @@
+steps:
+- id: "Build desafio golang"
+  name: mirror.gcr.io/library/golang
+  env: ['GO111MODULE=on']
+  args: ['go', 'build', 'main.go']
+
+- id: "Executanto o test"
+  name: mirror.gcr.io/library/golang
+  args: ['go', 'test', '-v']
+
+- id: "Building image from Docker.prod"
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/desafio_go:$SHORT_SHA', '-f', 'Dockerfile.prod', '.']
+
+- id: "Pushing image"
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/desafio_go:$SHORT_SHA']
+
+- id: "Ajustando arquivo deployment - k8s"
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: '/bin/sh'
+  args: 
+    - '-c'
+    - |
+        sed 's#img-app-deployment#gcr.io/$PROJECT_ID/desafio_go:$SHORT_SHA#g' k8s/deployment.yaml > k8s/deployment-new.yaml;
+          
+- id: "Deploy k8s"
+  name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  -   'apply'
+  -   '-f'
+  -   'k8s/deployment-new.yaml'
+  env:
+  -   'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  -   'CLOUDSDK_CONTAINER_CLUSTER=cluster-deploy-continuo'
