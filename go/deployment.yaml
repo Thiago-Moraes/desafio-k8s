@@ -16,4 +16,4 @@ spec:
             -   name: web-server-go
                 image: thiagomoraes/desafio_go
                 ports:
-                -   containerPort: 8000
+                -   containerPort: 80
