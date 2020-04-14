@@ -6,14 +6,14 @@ spec:
     replicas: 1
     selector:
         matchLabels:
-            app: web-server-go
+            app: app-go
     template:
         metadata:
             labels:
-                app: web-server-go
+                app: app-go
         spec:
             containers:
-            -   name: web-server-go
+            -   name: app-go
                 image: thiagomoraes/desafio_go
                 ports:
                 -   containerPort: 80

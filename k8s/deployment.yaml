@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: app-go
+    name: app_go
 spec:
     selector:
         matchLabels:
-            app: app-go
+            app: app_go
     template:
         metadata:
             labels:
-                app: app-go
+                app: app_go
         spec:
             containers:
-            -   name: app-go
+            -   name: app_go
                 image: img-app-deployment
                 ports:
                 -   containerPort: 80
